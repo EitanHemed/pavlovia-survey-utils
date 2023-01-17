@@ -3,10 +3,10 @@ import typing
 
 from . import cache_io, surveys, auth
 
-__all__ = ['add_user']
+__all__ = ['add_user', 'remove_user', 'remove_all_users']
 
 
-def add_user() -> None:
+def add_user() -> None:s
     username, password = collect_pavlovia_login_details()
     token = auth.get_token(username, password)
     cache_io.add_user_to_cache(username, token)
@@ -38,6 +38,14 @@ def remove_all_users() -> None:
 
 def list_surveys(user) -> None:
     return surveys.get_available_surveys(cache_io.load_token_for_user(user))
+
+def get_surveys(user, surveys) -> None:
+    token = cache_io.load_token_for_user(user)
+
+    if isinstance(surveys, str):
+        surveys = [surveys]
+
+    return surveys.get_surveys(cache_io.load_token_for_user(user))
 
 
 def collect_pavlovia_login_details() -> typing.Tuple:

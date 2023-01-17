@@ -29,7 +29,7 @@ def purge_cache():
 
 def get_cache_path() -> str:
     if sys.platform == 'win32':
-        return os.path.join(os.environ['APPDATA'], PACKAGE_NAME)
+        return os.path.join(os.environ['APPDATA'], f'.{PACKAGE_NAME}')
     else:
         return os.path.join(os.environ['HOME'], f'.{PACKAGE_NAME}')
 
