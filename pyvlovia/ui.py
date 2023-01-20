@@ -1,14 +1,14 @@
 import getpass
 import typing
 
-from . import cache_io, surveys, auth
+from . import cache_io, surveys_io, auth
 
 __all__ = ['add_user', 'remove_user', 'remove_all_users']
 
 
-def add_user() -> None:s
+def add_user() -> None:
     username, password = collect_pavlovia_login_details()
-    token = auth.get_token(username, password)
+    token = auth.get_pavlovia_access_token(username, password)
     cache_io.add_user_to_cache(username, token)
     print("--Added user: ", username)
 
@@ -37,7 +37,7 @@ def remove_all_users() -> None:
 
 
 def list_surveys(user) -> None:
-    return surveys.get_available_surveys(cache_io.load_token_for_user(user))
+    return surveys_io.get_available_surveys_details(cache_io.load_token_for_user(user))
 
 def get_surveys(user, surveys) -> None:
     token = cache_io.load_token_for_user(user)
