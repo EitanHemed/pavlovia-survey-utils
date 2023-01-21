@@ -13,4 +13,4 @@ __pycache__/
 # Scripts used for testing and debugging
 use_tests.py
 
-.idea/
+.idea/*
