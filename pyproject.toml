@@ -1,0 +1,32 @@
+[project]
+name = "pyvlovia"
+version = "0.0.1"
+description = 'Python library for data retrieval from Pavlovia surveys'
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE.txt" }
+keywords = ['pavlovia', 'surveys', 'utilities']
+authors = [
+    { email = "Eitan.Hemed@gmail.com" },
+    { name = "Eitan Hemed" }
+]
+maintainers = [
+    { name = "Eitan Hemed", email = "Eitan.Hemed@gmail.com" }
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python"
+]
+
+dependencies = [
+    "pandas",
+    "requests",
+]
+
+[project.urls]
+repository = 'https://github.com/EitanHemed/pyvlovia'
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+

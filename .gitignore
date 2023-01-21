@@ -1,0 +1,16 @@
+build/
+dist/
+wheels/
+*.egg-info/
+*.egg
+
+*.pyc
+*.pyo
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Scripts used for testing and debugging
+use_tests.py
+
+.idea/
