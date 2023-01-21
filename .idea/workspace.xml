@@ -4,17 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7cd9fc3-8d8c-4874-8fb4-02e2eba2cce3" name="Changes" comment="Refactoring, mainly changes in the surveys_io.py (previously surveys.py).">
+    <list default="true" id="f7cd9fc3-8d8c-4874-8fb4-02e2eba2cce3" name="Changes" comment="Fixed README.md and surveys_io.py, except for saving survey as directory.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyvlovia/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyvlovia/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/pyproject.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyvlovia/pyvlovia/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/pyvlovia/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyvlovia/pyvlovia/cache_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/pyvlovia/cache_io.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyvlovia/pyvlovia/images.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/pyvlovia/file_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyvlovia/pyvlovia/surveys_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/pyvlovia/surveys_io.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyvlovia/pyvlovia/ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/pyvlovia/ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyvlovia/setup.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/setup.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyvlovia/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +67,7 @@
       <workItem from="1674145187837" duration="15000" />
       <workItem from="1674218514565" duration="85000" />
       <workItem from="1674218616619" duration="15000" />
-      <workItem from="1674218646217" duration="23513000" />
+      <workItem from="1674218646217" duration="24552000" />
     </task>
     <task id="LOCAL‎-00001" summary="Edited README.md, mostly.">
       <created>1673946009850</created>
@@ -92,7 +83,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1674249557962</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL‎-00003" summary="Fixed README.md and surveys_io.py, except for saving survey as directory.">
+      <created>1674316647762</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL‎-00003" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1674316647762</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -124,6 +122,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Edited README.md, mostly." />
     <MESSAGE value="Refactoring, mainly changes in the surveys_io.py (previously surveys.py)." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring, mainly changes in the surveys_io.py (previously surveys.py)." />
+    <MESSAGE value="Fixed README.md and surveys_io.py, except for saving survey as directory." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed README.md and surveys_io.py, except for saving survey as directory." />
   </component>
 </project>
