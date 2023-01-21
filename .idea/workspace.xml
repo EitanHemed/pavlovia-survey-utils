@@ -4,14 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7cd9fc3-8d8c-4874-8fb4-02e2eba2cce3" name="Changes" comment="Edited README.md, mostly.">
-      <change afterPath="$PROJECT_DIR$/../pyvlovia/pyvlovia/api.py" afterDir="false" />
+    <list default="true" id="f7cd9fc3-8d8c-4874-8fb4-02e2eba2cce3" name="Changes" comment="Refactoring, mainly changes in the surveys_io.py (previously surveys.py).">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pyvlovia/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pyvlovia/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/pyproject.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pyvlovia/pyvlovia/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/pyvlovia/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyvlovia/pyvlovia/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/pyvlovia/auth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pyvlovia/pyvlovia/cache_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/pyvlovia/cache_io.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyvlovia/pyvlovia/surveys.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/pyvlovia/surveys_io.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pyvlovia/pyvlovia/images.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/pyvlovia/file_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pyvlovia/pyvlovia/surveys_io.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/pyvlovia/surveys_io.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../pyvlovia/pyvlovia/ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/pyvlovia/ui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pyvlovia/setup.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/setup.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pyvlovia/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/../pyvlovia/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,20 +41,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "actions.on.save",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="G:\My Drive\OneDrive Transfer\Postdoc\Projects\pavsu" />
@@ -73,7 +76,7 @@
       <workItem from="1674145187837" duration="15000" />
       <workItem from="1674218514565" duration="85000" />
       <workItem from="1674218616619" duration="15000" />
-      <workItem from="1674218646217" duration="7931000" />
+      <workItem from="1674218646217" duration="23513000" />
     </task>
     <task id="LOCAL‎-00001" summary="Edited README.md, mostly.">
       <created>1673946009850</created>
@@ -82,7 +85,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1673946009850</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL‎-00002" summary="Refactoring, mainly changes in the surveys_io.py (previously surveys.py).">
+      <created>1674249557962</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL‎-00002" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1674249557962</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -113,6 +123,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Edited README.md, mostly." />
-    <option name="LAST_COMMIT_MESSAGE" value="Edited README.md, mostly." />
+    <MESSAGE value="Refactoring, mainly changes in the surveys_io.py (previously surveys.py)." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring, mainly changes in the surveys_io.py (previously surveys.py)." />
   </component>
 </project>
