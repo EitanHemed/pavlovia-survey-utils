@@ -27,15 +27,15 @@ def save_base64_image(fname, iamge_format, image_data):
     with open(f"{fname}.{iamge_format}", "wb") as fh:
         fh.write(image_data)
 
-def save_image_columns(df, survey_name, grouper='sessionToken', root='.'):
-    image_columns = find_image_columns()
+def save_image_columns(df, survey_name, root='.', grouper='sessionToken'):
+    image_columns = find_image_columns(df)
 
     if len(image_columns):
         grouped = df.groupby(grouper)
 
         for n, g in grouped:
             for i in image_columns:
-                pth = os.path.join(root, 'output', 'processed', survey_name, 'images', i)
+                pth = os.path.join(root, 'pyvlovia_output', survey_name, 'images', i)
                 os.makedirs(pth, exist_ok=True)
                 process_image(g[i].values[0],
                               os.path.join(pth, n))

@@ -11,7 +11,8 @@ from . import file_utils
 
 SURVEYS_URL = 'https://pavlovia.org/api/v2/surveys'
 
-__all__ = ['load_available_surveys', 'download_surveys', 'get_surveys_dataframe', 'get_surveys_raw']
+__all__ = ['load_available_surveys', 'download_surveys', 'get_surveys_dataframe', 'get_surveys_raw',
+           'download_surveys_as_json']
 
 
 def download_surveys(token: str, survey_ids: str | typing.Sequence[str] | None = None,
@@ -25,9 +26,21 @@ def download_surveys(token: str, survey_ids: str | typing.Sequence[str] | None =
 
     for _id in surveys_dfs.keys():
         _save_survey_as_directory(
-            surveys_dfs[_id], surveys_dfs[_id]['_survey_name'].iloc[0],
+            surveys_dfs[_id], surveys_dfs[_id]['surveyName'].iloc[0],
             root=abs_root
         )
+
+
+def download_surveys_as_json(survey_id: str, token: str, survey_name: str, root='.') -> None:
+    data = _download_survey(survey_id, token)
+
+    _root = os.path.abspath(root)
+
+    os.makedirs(os.path.join(_root, 'pyvlovia_output', survey_name), exist_ok=True)
+
+    with open(os.path.join(_root, 'pyvlovia_output', survey_name, f'raw.json'),
+              'w', encoding='utf-8') as f:
+        json.dump(data, f)
 
 
 def load_available_surveys(token: str) -> dict:
@@ -66,7 +79,7 @@ def get_surveys_dataframe(survey_ids: str | typing.Sequence[str], token: str) ->
 
     raw_surveys = get_surveys_raw(survey_ids, token)
 
-    return {_id: extract_responses_from_raw_survey(raw_surveys[_id]) for _id in survey_ids}
+    return {_id: extract_dataframes_from_raw_survey(raw_surveys[_id]) for _id in survey_ids}
 
 
 def get_surveys_raw(survey_ids: str | typing.Sequence[str], token: str) -> dict:
@@ -90,7 +103,7 @@ def _save_survey_as_directory(df: pd.DataFrame, survey_name: str,
     _save_csv(df.drop(image_columns, axis=1), survey_name, root)
 
     if save_images and len(image_columns):
-        file_utils.save_image_columns(df, survey_name, image_columns, root)
+        file_utils.save_image_columns(df, survey_name, root=root)
 
 
 def _download_survey(survey_id: str, token: str) -> dict:
@@ -105,20 +118,18 @@ def _download_survey(survey_id: str, token: str) -> dict:
         return dict()
 
 
-def _save_survey_as_json(survey_id: str, token: str, survey_name: str) -> None:
-    data = _download_survey(survey_id, token)
+def extract_dataframes_from_raw_survey(raw_survey: dict) -> pd.DataFrame:
+    _meta_data = pd.DataFrame(raw_survey['survey_responses'])
+    _responses = pd.DataFrame(_meta_data['surveyResponse'].values.tolist())
+    _meta_data = _meta_data.drop('surveyResponse', axis=1)
+    df = pd.concat([_meta_data, _responses], axis=1)
+    df['surveyName'] = raw_survey['survey_data']['surveyName']
+    return df.loc[:, ~df.columns.duplicated()]
 
-    with open(os.path.join('output', 'raw', 'json', f'{survey_name}.json'),
-              'w', encoding='utf-8') as f:
-        json.dump(data, f)
-
-
-def extract_responses_from_raw_survey(raw_survey: dict) -> pd.DataFrame:
-    meta_data = pd.DataFrame(raw_survey['survey_data'])
-    data = pd.DataFrame(raw_survey['survey_responses']) # pd.DataFrame(meta_data['surveyResponse'].values.tolist())
-    meta_data = meta_data.drop(['surveyResponse', 'participant'], axis=1)
-    df = pd.concat([meta_data, data], axis=1)
-    return df.loc[:, ~df.columns.duplicated()].copy()
+    # data = pd.DataFrame(raw_survey['survey_responses']) # pd.DataFrame(meta_data['surveyResponse'].values.tolist())
+    # _meta_data = _meta_data.drop(['surveyResponse', 'participant'], axis=1)
+    # df = pd.concat([meta_data, data], axis=1)
+    # return df.loc[:, ~df.columns.duplicated()].copy()
     # metadata = raw_survey['survey_data']
     # responses = pd.DataFrame(raw_survey['survey_responses'])
     # responses['_survey_name'] = metadata['surveyName']
@@ -127,7 +138,7 @@ def extract_responses_from_raw_survey(raw_survey: dict) -> pd.DataFrame:
 
 
 def _save_csv(df: pd.DataFrame, survey_name: str, root: typing.Union[str, pathlib.Path] = '.') -> None:
-    pth = os.path.join(root, 'output', 'processed', survey_name)
+    pth = os.path.join(os.path.abspath(root), 'pyvlovia_output', survey_name)
     os.makedirs(pth, exist_ok=True)
     df.to_csv(os.path.join(pth, f'{survey_name}.csv'),
               encoding='utf-8-sig', index=False)
