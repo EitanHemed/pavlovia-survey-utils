@@ -18,8 +18,7 @@ def list_users() -> typing.List:
 
 
 def remove_user(user) -> None:
-    cache_io.remove_user_from_cache(user)
-    print("--Removed user: ", user)
+    print(cache_io.remove_user_from_cache(user))
 
 
 def remove_all_users() -> None:
@@ -37,7 +36,8 @@ def remove_all_users() -> None:
 
 
 def list_surveys(user) -> None:
-    return surveys_io.get_available_surveys_details(cache_io.load_token_for_user(user))
+    return surveys_io.load_available_surveys(cache_io.load_token_for_user(user))
+
 
 def get_surveys(user, surveys) -> None:
     token = cache_io.load_token_for_user(user)

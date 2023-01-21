@@ -2,16 +2,18 @@ import base64
 import typing
 import os
 
+# TODO - support non-image files
+
 def process_image(s, pth):
     image_format, image_data = read_base64_img(s)
     save_base64_image(pth, image_format, image_data)
 
 
 def find_image_columns(df) -> typing.List:
-    str_cols = df.columns[(df.applymap(type) == str).all(0)]
+    str_cols = df.columns[(df.applymap(type) == str).all(axis='index')]
 
     return str_cols[
-        df[str_cols].apply(lambda s: s.str.startswith('data:image')).any(0).values]
+        df[str_cols].apply(lambda s: s.str.startswith('data:image')).any(axis='index').values]
 
 
 def read_base64_img(image_string):
@@ -25,7 +27,7 @@ def save_base64_image(fname, iamge_format, image_data):
     with open(f"{fname}.{iamge_format}", "wb") as fh:
         fh.write(image_data)
 
-def save_image_columns(df, survey_name, grouper='sessionToken'):
+def save_image_columns(df, survey_name, grouper='sessionToken', root='.'):
     image_columns = find_image_columns()
 
     if len(image_columns):
@@ -33,7 +35,7 @@ def save_image_columns(df, survey_name, grouper='sessionToken'):
 
         for n, g in grouped:
             for i in image_columns:
-                pth = f'output/processed/{survey_name}/images/{i}'
+                pth = os.path.join(root, 'output', 'processed', survey_name, 'images', i)
                 os.makedirs(pth, exist_ok=True)
                 process_image(g[i].values[0],
-                              f'{pth}/{n}')
+                              os.path.join(pth, n))

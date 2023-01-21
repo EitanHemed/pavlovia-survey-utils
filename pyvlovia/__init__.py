@@ -1,4 +1,10 @@
-from . import auth, surveys_io, cache_io
+from . import auth
 
-if not cache_io.test_if_user_cache_exists():
-    cache_io.create_user_cache()
+from . cache_io import *
+from . cache_io import _test_if_user_cache_exists, _create_user_cache
+
+from . surveys_io import *
+
+
+if not _test_if_user_cache_exists():
+    _create_user_cache()

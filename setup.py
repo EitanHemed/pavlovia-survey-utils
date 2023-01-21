@@ -1,4 +1,4 @@
-INSTALL_REQUIRES = [
-   'requests',
-   'pandas',
-]
+import setuptools
+
+if __name__ == "__main__":
+    setuptools.setup()
