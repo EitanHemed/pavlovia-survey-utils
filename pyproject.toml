@@ -1,5 +1,5 @@
 [project]
-name = "pyvlovia"
+name = "pavlovia_surveys_utils"
 version = "0.0.1"
 description = 'Python library for data retrieval from Pavlovia surveys'
 readme = "README.md"
@@ -24,7 +24,7 @@ dependencies = [
 ]
 
 [project.urls]
-repository = 'https://github.com/EitanHemed/pyvlovia'
+repository = 'https://github.com/EitanHemed/pavlovia_surveys_utils'
 
 [build-system]
 requires = ["setuptools>=42", "wheel"]
