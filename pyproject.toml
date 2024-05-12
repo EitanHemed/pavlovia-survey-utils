@@ -5,7 +5,7 @@ description = 'Python library for data retrieval from Pavlovia surveys'
 readme = "README.md"
 requires-python = ">=3.8"
 license = { file = "LICENSE.txt" }
-keywords = ['pavlovia', 'surveys', 'utilities']
+keywords = ['pavlovia', 'surveys', 'data retrieval']
 authors = [
     { email = "Eitan.Hemed@gmail.com" },
     { name = "Eitan Hemed" }
@@ -17,11 +17,15 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python"
 ]
-
 dependencies = [
     "pandas",
     "requests",
 ]
+[project.optional-dependencies]
+dev = [
+        "pytest",
+        "pytest-cov",
+    ]
 
 [project.urls]
 repository = 'https://github.com/EitanHemed/pavlovia_surveys_utils'

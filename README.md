@@ -1,14 +1,21 @@
 # pavlovia_survey_utils
 
-`pavlovia_surveys_utils` is a Python library for data retrieval from
+`pavlovia_survey_utils` is a Python library for data retrieval from
 [Pavlovia](https://pavlovia.org) surveys. It can be used to receive either the raw JSON format
 data, or save a tidy version of the data, including downloading of images (e.g., signatures)
 uploaded or created by your survey participants.
 
-## Sections:
+The main motivation is to automate the process of data retrieval from Pavlovia surveys. This is handy when you
+either have a large number of surveys to download, or when you want to download the data regularly (e.g., after
+running a cohort of participants on Prolific), and automatically calculate their bonus payments.
+
+
+#### Disclaimer: This library is not affiliated with Pavlovia, and is not an official Pavlovia product. 
+
+---
+## See also In this README:
 
 - [Setup](#Setup)
-- [Requirements](#Requirements)
 - [Usage](#Usage)
 - [FAQ](#FAQ)
 - [Contributing](#Contributing)
@@ -17,25 +24,30 @@ uploaded or created by your survey participants.
 
 `pip install git+https://github.com/EitanHemed/pavlovia_survey_utils.git`
 
-## Requirements
 
-- `pandas`
-- `requests`
+For development purposes, clone the repository and install the package in editable mode:
+
+```
+pip install -e .[dev]
+```
+
+TODO - update the uasge section
 
 ## Usage
 
 First:
-`import pavlovia_surveys_utils as psu`
+`import pavlovia_survey_utils as psu`
 
 Then, there are two main steps - (1) Accessing Pavlovia and (2) Data Retrieval
 
 1. Accessing Pavlovia:
 
    You will need your access token to Pavlovia. From here you can choose to store it permanently in a local cache
-   (more recommended), or generate it every time you use `pavlovia_surveys_utils`. You can remove the cache of tokens at any time.
+   (more recommended), or generate it every time you use `pavlovia_survey_utils`. You can remove the cache of tokens at
+   any time.
 
     * Permanent storage:
-      Call `psu.add_user_to_cache('username', 'password')`. You can add as many users as you wish, at any stage.
+      Call `psu.add_user_to_cache(username, password)`. You can add as many users as you wish, at any stage.
         * Now the token is available using `psu.load_token_for_user('username')`, even in future sessions.
         * To view the stored users, call `psu.load_available_users()`.
         * To remove a specific user (or all users) from the local cache, call
@@ -88,27 +100,31 @@ to go about it.
 
 ## FAQ
 
-#### What permissions does `pavlovia_surveys_utils` require?
+#### What permissions does `pavlovia_survey_utils` require?
 
-_pavlovia_surveys_utils generates an access token on gitlab with a `read-user` scope. See
+_pavlovia_survey_utils generates an access token on gitlab with a `read-user` scope. See
 [here](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html#personal-access-token-scopes)
 for details._
 
 #### Where is my access token stored?
 
 _Similarly to PsychoPy, your username and access token are stored in the AppData directory, on your computer (e.g.,
-`C:\Users\User\AppData\Roaming\pavlovia_surveys_utils` on Windows, `HOME/pavlovia_surveys_utils` on MAC/Linux). If you did not find it, try running
-`import os; print(os.path.join(os.environ['APPDATA'], 'pavlovia_surveys_utils'))`._
+`C:\Users\User\AppData\Roaming\pavlovia_survey_utils` on Windows, `HOME/pavlovia_survey_utils` on MAC/Linux). If you did
+not find it, try running
+`import os; print(os.path.join(os.environ['APPDATA'], 'pavlovia_survey_utils'))`._
 
 #### How to remove my access data?
 
-_To remove a specific user (or all users) from the local cache, call `psu.remove_user_from_cache('username')` (or `psu.purge_cache()`) respectively
-Alternatively - manually edit or remove the JSON file under the directory used by `pavlovia_surveys_utils`. Not sure where that is?
-   See previous question._
+_To remove a specific user (or all users) from the local cache, call `psu.remove_user_from_cache('username')` (
+or `psu.purge_cache()`) respectively
+Alternatively - manually edit or remove the JSON file under the directory used by `pavlovia_survey_utils`. Not sure
+where that is?
+See previous question._
 
 ## Contributing
 
 If you find a bug :bug:, please open
-a [bug report](https://github.com/EitanHemed/pavlovia_surveys_utils/issues/new?assignees=&labels=bug&template=bug_report.md&title=).
+a [bug report](https://github.com/EitanHemed/pavlovia_survey_utils/issues/new?assignees=&labels=bug&template=bug_report.md&title=).
 If you have an idea for an improvement or new feature :rocket:, please open
-a [feature request](https://github.com/EitanHemed/pavlovia_surveys_utils/issues/new?assignees=&labels=Feature+request&template=feature_request.md&title=).
+a [feature request](https://github.com/EitanHemed/pavlovia_survey_utils/issues/new?assignees=&labels=Feature+request&template=feature_request.md&title=).
+

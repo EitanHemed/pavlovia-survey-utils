@@ -11,6 +11,6 @@ __pycache__/
 *$py.class
 
 # Scripts used for testing and debugging
-use_tests.py
+src/tests/use_tests.py
 
 .idea/*

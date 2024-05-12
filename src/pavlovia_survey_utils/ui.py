@@ -1,17 +1,30 @@
+# TODO - TURN THIS INTO A CLI USING CLICK
 import getpass
 import typing
 
-from . import cache_io, surveys_io, auth
+import pavlovia_surveys_utils.cache_io
+from . import auth, survey_utils
 
 __all__ = ['add_user', 'remove_user', 'remove_all_users']
 
 
 def add_user() -> None:
     username, password = collect_pavlovia_login_details()
-    token = auth.get_pavlovia_access_token(username, password)
+    token = pavlovia_surveys_utils.cache_io.get_pavlovia_access_token(username, password)
     cache_io.add_user_to_cache(username, token)
     print("--Added user: ", username)
 
+def update_user() -> None:
+
+    username, password = collect_pavlovia_login_details()
+    # Does the user already exist?
+    if username in cache_io.load_available_users():
+        print("User already exists. Updating user.")
+    else:
+        print("User does not exist. Adding user.")
+    token = pavlovia_surveys_utils.cache_io.get_pavlovia_access_token(username, password)
+    cache_io.add_user_to_cache(username, token)
+    print("--Added user: ", username)
 
 def list_users() -> typing.List:
     return cache_io.load_available_users()
