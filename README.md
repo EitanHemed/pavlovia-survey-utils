@@ -9,10 +9,16 @@ The main motivation is to automate the process of data retrieval from Pavlovia s
 either have a large number of surveys to download, or when you want to download the data regularly (e.g., after
 running a cohort of participants on Prolific), and automatically calculate their bonus payments.
 
-
-#### Disclaimer: This library is not affiliated with Pavlovia, and is not an official Pavlovia product. 
+#### Disclaimer: 
+    (a) This library is not a product of [OST](https://opensciencetools.org/), and 
+    not affilited with OST, hence all complaints should be directed to this projects's issues 
+    [tab](https://github.com/EitanHemed/pavlovia_survey_utils/issues/new). 
+    (b) This program is distributed as-is,
+    and the author is not responsible for any bugs or issues that may arise from its use (you can however report and/or
+    fix them, though).
 
 ---
+
 ## See also In this README:
 
 - [Setup](#Setup)
@@ -23,7 +29,6 @@ running a cohort of participants on Prolific), and automatically calculate their
 ## Setup
 
 `pip install git+https://github.com/EitanHemed/pavlovia_survey_utils.git`
-
 
 For development purposes, clone the repository and install the package in editable mode:
 
@@ -41,12 +46,13 @@ First, import the library:
 import pavlovia_survey_utils as psu
 ```
 
-The most recommended way to use `pavlovia_survey_utils` is to store your access token in a local cache (similar to how 
+The most recommended way to use `pavlovia_survey_utils` is to store your access token in a local cache (similar to how
 PsychoPy stores your access details, see FAQ below). This way, you
 will not need to provide your username and password every time you use the library. You can add as many users as you
 wish to the cache.
 
 Adding your access token to the cache:
+
 ```python
 username = 'my_username'
 password = '***********'
@@ -55,20 +61,21 @@ psu.add_user_to_cache(username, password)
 
 Now you can download the data from all surveys available for the given user:
 
-
 ```python
 import pavlovia_survey_utils as psu
+
 username = 'my_username'
 password = 'my_password'
 token = psu.auth.get_pavlovia_access_token(username, password)
 # can also pass access_rights='shared' or 'owned' to view shared surveys, by default returns both shared and owned surveys
-available_surveys = psu.load_available_surveys(token)  
+available_surveys = psu.load_available_surveys(token)
 print(available_surveys)
 ```
-    
+
 ```python
 # Download a single survey
-survey_ids = ['06499283-0f33-4e84-8776-87acb6bda9c7', 'e42b22f9-f083-4cce-896e-9cb98a6f6f3e'] # Get it from the survey URL for example
+survey_ids = ['06499283-0f33-4e84-8776-87acb6bda9c7',
+              'e42b22f9-f083-4cce-896e-9cb98a6f6f3e']  # Get it from the survey URL for example
 psu.download_surveys(survey_ids, token)
 ```
 
@@ -150,6 +157,10 @@ _Similarly to PsychoPy, your username and access token are stored in the AppData
 not find it, try running
 `import os; print(os.path.join(os.environ['APPDATA'], 'pavlovia_survey_utils'))`._
 
+#### Can i use pavlovia_survey_utils to modify or delete a survey or the records in it?
+
+No. `pavlovia_survey_utils` is aimed to only read data. Currently there are no plans to add write capabilities.
+
 #### How to remove my access data?
 
 _To remove a specific user (or all users) from the local cache, call `psu.remove_user_from_cache('username')` (
@@ -158,10 +169,26 @@ Alternatively - manually edit or remove the JSON file under the directory used b
 where that is?
 See previous question._
 
+#### How to get the survey id?
+
+The survey id is the unique identifier of a survey on Pavlovia. You can find it in the URL of the survey page on
+[Pavlovia](https://pavlovia.org/) (
+e.g., [680fd574-62c8-4d6f-b611-a6567f737edb](https://run.pavlovia.org/pavlovia/survey/?surveyId=680fd574-62c8-4d6f-b611-a6567f737edb)).
+
+## Planned Features
+
+| Planned Features                                                            | Status  |
+|-----------------------------------------------------------------------------|---------|
+| Aliases for saved users and surveys                                         | Planned |
+| Support for downloading other additional file types (i.e., not just images) | Planned |
+| Accessing survey data by survey name, rather than just survey id            | Planned |
+| Option to limit the storage period of a token                               | Planned |
+
 ## Contributing
 
 If you find a bug :bug:, please open
-a [bug report](https://github.com/EitanHemed/pavlovia_survey_utils/issues/new?assignees=&labels=bug&template=bug_report.md&title=).
+a [bug report](https://github.com/EitanHemed/pavlovia_survey_utils/issues/new).
 If you have an idea for an improvement or new feature :rocket:, please open
 a [feature request](https://github.com/EitanHemed/pavlovia_survey_utils/issues/new?assignees=&labels=Feature+request&template=feature_request.md&title=).
+
 
