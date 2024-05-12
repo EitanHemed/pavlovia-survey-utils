@@ -31,9 +31,46 @@ For development purposes, clone the repository and install the package in editab
 pip install -e .[dev]
 ```
 
-TODO - update the uasge section
-
 ## Usage
+
+To use `pavlovia_survey_utils`, you will need to have a Pavlovia account.
+
+First, import the library:
+
+```python
+import pavlovia_survey_utils as psu
+```
+
+The most recommended way to use `pavlovia_survey_utils` is to store your access token in a local cache (similar to how 
+PsychoPy stores your access details, see FAQ below). This way, you
+will not need to provide your username and password every time you use the library. You can add as many users as you
+wish to the cache.
+
+Adding your access token to the cache:
+```python
+username = 'my_username'
+password = '***********'
+psu.add_user_to_cache(username, password)
+```
+
+Now you can download the data from all surveys available for the given user:
+
+
+```python
+import pavlovia_survey_utils as psu
+username = 'my_username'
+password = 'my_password'
+token = psu.auth.get_pavlovia_access_token(username, password)
+# can also pass access_rights='shared' or 'owned' to view shared surveys, by default returns both shared and owned surveys
+available_surveys = psu.load_available_surveys(token)  
+print(available_surveys)
+```
+    
+```python
+# Download a single survey
+survey_ids = ['06499283-0f33-4e84-8776-87acb6bda9c7', 'e42b22f9-f083-4cce-896e-9cb98a6f6f3e'] # Get it from the survey URL for example
+psu.download_surveys(survey_ids, token)
+```
 
 First:
 `import pavlovia_survey_utils as psu`
@@ -47,14 +84,14 @@ Then, there are two main steps - (1) Accessing Pavlovia and (2) Data Retrieval
    any time.
 
     * Permanent storage:
-      Call `psu.add_user_to_cache(username, password)`. You can add as many users as you wish, at any stage.
+      Call `psu.add_user_to_cache(username, password)`. You can add as many users as you wish.
         * Now the token is available using `psu.load_token_for_user('username')`, even in future sessions.
         * To view the stored users, call `psu.load_available_users()`.
         * To remove a specific user (or all users) from the local cache, call
-          `psu.remove_user_from_cache('username')` (or `psu.purge_cache()`) respectively.
+          `psu.remove_user_from_cache(username)` (or `psu.purge_cache()`) respectively.
 
-    * To use it in the current session only,
-      call `psu.auth.get_pavlovia_access_token('my_username', 'my_password')`.
+    * To avoid permanent storage:
+      call `psu.auth.get_pavlovia_access_token('my_username', 'my_password')`, and use the token
 
 2. Data Retrieval
 

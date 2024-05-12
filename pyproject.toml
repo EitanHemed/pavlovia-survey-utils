@@ -18,8 +18,9 @@ classifiers = [
     "Programming Language :: Python"
 ]
 dependencies = [
-    "pandas",
-    "requests",
+    'click',
+    'pandas',
+    'requests'
 ]
 [project.optional-dependencies]
 dev = [
@@ -34,3 +35,5 @@ repository = 'https://github.com/EitanHemed/pavlovia_surveys_utils'
 requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[project.scripts]
+survey-utils = "pavlovia_survey_utils.cli.cli:main"

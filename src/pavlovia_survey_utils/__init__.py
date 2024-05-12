@@ -1,8 +1,3 @@
-from . auth import *
-from . auth import _test_if_user_cache_exists, _create_user_cache
+__version__ = '0.1.0'
 
-from . survey_utils import *
-
-
-if not _test_if_user_cache_exists():
-    _create_user_cache()
+from . import cli, api
