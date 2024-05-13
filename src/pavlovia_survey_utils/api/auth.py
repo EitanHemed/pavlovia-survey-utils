@@ -21,33 +21,33 @@ REQUEST_POST_URL = 'https://gitlab.pavlovia.org/oauth/token?scope=read_user'
 __all__ = ['load_available_users', 'add_user_to_cache', 'purge_cache', 'remove_user_from_cache', 'load_token_for_user']
 
 
-def add_user_to_cache(username: str, password: str) -> None:
+def add_user_to_cache(username: str, password: str,
+                      force_update:bool = False) -> None:
     """
     Register a user in the saved users cache.
 
     :param username: The username on Pavlovia.
     :param password: The password of the user.
+    :param force_update: If True, the user will be updated if they already exist.
     :return:
     """
     user_reg_path = _get_user_reg_path()
-
-    try:
-        token = get_pavlovia_access_token(username, password)
-    except KeyError as e:
-        raise KeyError(f"User {username} not found on Pavlovia. Please check the username and password.") from e
+    token = get_pavlovia_access_token(username, password)
 
     user_data = dict(
-        username=username, access_token=token,
+        access_token=token,
         registeration_date=datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
 
     with open(user_reg_path, 'r+') as f:
         cache = json.load(f)
-        if username not in cache:
+
+    if (username not in cache) or force_update:
+        with open(user_reg_path, 'w') as f:
             cache[username] = user_data
             json.dump(cache, f)
-        else:
-            warnings.warn(f"User {username} already exists in cache. "
-                          f"Please use update_user() to update the user's token.")
+    else:
+        warnings.warn(f"User {username} already exists in cache. "
+                          f"Please pass `force_update=True`.")
 
 def remove_user_from_cache(user) -> str:
     """
@@ -86,8 +86,8 @@ def purge_cache() -> None:
     Remove all users from the cache.
     :return:
     """
-    with open(_get_user_reg_path(), 'w') as f:
-        json.dump({}, f)
+    # Remove the cache file.
+    os.remove(_get_user_reg_path())
 
 def load_token_for_user(user: str) -> str:
     """
@@ -133,5 +133,9 @@ def get_pavlovia_access_token(gitlab_username: str, gitlab_password: str) -> str
     data = {'grant_type': 'password', 'username': gitlab_username, 'password': gitlab_password}
     resp = requests.post(REQUEST_POST_URL, data=data)
     resp_data = resp.json()
-    gitlab_oauth_token = resp_data[TOKEN_KEY_NAME]
+    try:
+        gitlab_oauth_token = resp_data[TOKEN_KEY_NAME]
+    except KeyError as e:
+        raise KeyError(f"Please check the username and password.") from e
+
     return gitlab_oauth_token
