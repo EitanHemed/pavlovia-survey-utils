@@ -71,7 +71,7 @@ def save_image_columns(df: pd.DataFrame, survey_name: str, root: str | pathlib.P
 
         for n, g in grouped:
             for i in image_columns:
-                pth = os.path.join(os.path.abspath(root), 'pyvlovia_output', survey_name, 'images', i)
+                pth = os.path.join(os.path.abspath(root), 'pavlovia-survey-utils', survey_name, 'images', i)
                 os.makedirs(pth, exist_ok=True)
                 process_image(g[i].values[0],
                               os.path.join(pth, n))

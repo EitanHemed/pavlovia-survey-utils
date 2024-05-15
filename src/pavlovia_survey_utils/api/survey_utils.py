@@ -66,6 +66,7 @@ def load_available_surveys(token: str, access_rights: str = 'both') -> dict:
     else:
         if access_rights not in ['owned', 'shared']:
             raise ValueError(f"Invalid access rights: {access_rights}.")
+        _access_rights = access_rights
 
     # TODO - see how we can query for surveys which are not owned, but shared.
     resp = requests.get(f'https://pavlovia.org/api/v2/surveys?accessRights={_access_rights}',

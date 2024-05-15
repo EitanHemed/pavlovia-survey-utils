@@ -179,10 +179,12 @@ e.g., [680fd574-62c8-4d6f-b611-a6567f737edb](https://run.pavlovia.org/pavlovia/s
 
 | Planned Features                                                            | Status  |
 |-----------------------------------------------------------------------------|---------|
-| Aliases for saved users and surveys                                         | Planned |
-| Support for downloading other additional file types (i.e., not just images) | Planned |
 | Accessing survey data by survey name, rather than just survey id            | Planned |
+| Aliases for saved users and surveys                                         | Planned |
 | Option to limit the storage period of a token                               | Planned |
+| Support for downloading other additional file types (i.e., not just images) | Planned |
+
+
 
 ## Contributing
 
