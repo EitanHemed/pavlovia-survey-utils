@@ -17,9 +17,12 @@ PACKAGE_NAME = 'pavlovia_surveys_utils'
 TOKEN_KEY_NAME = 'access_token'
 REQUEST_POST_URL = 'https://gitlab.pavlovia.org/oauth/token?scope=read_user'
 
+REGISTRATION_DATE_KEY_NAME = 'registration_date'
 
 __all__ = ['load_available_users', 'add_user_to_cache', 'purge_cache', 'remove_user_from_cache', 'load_token_for_user']
 
+def _get_timestamp() -> str:
+    return datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
 def add_user_to_cache(username: str, password: str,
                       force_update:bool = False) -> None:
@@ -34,17 +37,20 @@ def add_user_to_cache(username: str, password: str,
     user_reg_path = _get_user_reg_path()
     token = get_pavlovia_access_token(username, password)
 
-    user_data = dict(
-        access_token=token,
-        registeration_date=datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+    user_data = {
+        TOKEN_KEY_NAME: token,
+        REGISTRATION_DATE_KEY_NAME: _get_timestamp()
+    }
 
-    with open(user_reg_path, 'r+') as f:
+    with open(user_reg_path, 'r') as f:
         cache = json.load(f)
 
     if (username not in cache) or force_update:
+        # Overwrite the user data.
         with open(user_reg_path, 'w') as f:
             cache[username] = user_data
-            json.dump(cache, f)
+            _json = json.dumps(cache)
+            f.write(_json)
     else:
         warnings.warn(f"User {username} already exists in cache. "
                           f"Please pass `force_update=True`.")
