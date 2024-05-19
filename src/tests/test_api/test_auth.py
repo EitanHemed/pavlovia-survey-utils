@@ -50,21 +50,22 @@ class TestAuth(unittest.TestCase):
                 # Check if the file was written to
                 _mock_open().write.assert_called_once_with(json.dumps(only_user_1))
 
-                _mock_open().write.rereset_mock()
-
                 # Change the return value of the post request
                 mock_post.return_value.json.return_value = {'access_token': mock_token_2}
 
                 auth.add_user_to_cache(mock_user_2, mock_password_2)
-                _mock_open().write.assert_called_once_with(json.dumps(only_user_2))
+                _mock_open().write.assert_has_calls([mock.call(json.dumps(only_user_1)), mock.call(json.dumps(two_users))])
+
 
 
 
     def test_add_user_to_cache_force_update(self):
+
         with mock.patch('builtins.open', mock.mock_open()) as mock_open:
 
             with mock.patch('requests.post') as mock_post:
-                mock_post.return_value.json.return_value = {'access_token': mock_token_1}
+
+                mock_post.return_value.json.return_value = json.dumps({'access_token': mock_token_1})
 
                 auth.add_user_to_cache(mock_user_1, mock_password_1)
                 mock_open().write.assert_called_once_with(json.dumps(only_user_1))
