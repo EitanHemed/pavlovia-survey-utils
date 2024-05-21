@@ -4,26 +4,31 @@ import json
 import unittest
 import unittest.mock as mock
 
-import requests
-
 from pavlovia_survey_utils.api import auth
-from pavlovia_survey_utils.api.auth import USERS_CACHE_FNAME, TOKEN_KEY_NAME, REGISTRATION_DATE_KEY_NAME
+from pavlovia_survey_utils.api.auth import TOKEN_KEY_NAME, REGISTRATION_DATE_KEY_NAME
 
 mock_user_1 = 'mock_user_1'
 mock_password_1 = 'mock_password_1'
 mock_token_1 = 'mock_token_1'
 registration_date_1 = auth._get_timestamp()
 
+mock_user_1_updated = 'mock_user_1'
+mock_password_1_updated = 'mock_password_1'
+mock_token_1_updated = 'mock_token_1 UPDATED'
+registration_date_1_updated = 'UPDATED TIMESTAMP'
+
 mock_user_2 = 'mock_user_2'
 mock_password_2 = 'mock_password_2'
 mock_token_2 = 'mock_token_2'
-registration_date_2 = auth._get_timestamp()
+registration_date_2 = registration_date_1
 
-two_users = {mock_user_1: {TOKEN_KEY_NAME: mock_token_1, REGISTRATION_DATE_KEY_NAME: registration_date_1},
-             mock_user_2: {TOKEN_KEY_NAME: mock_token_2, REGISTRATION_DATE_KEY_NAME: registration_date_2}}
 only_user_1 = {mock_user_1: {TOKEN_KEY_NAME: mock_token_1, REGISTRATION_DATE_KEY_NAME: registration_date_1}}
 only_user_2 = {mock_user_2: {TOKEN_KEY_NAME: mock_token_2, REGISTRATION_DATE_KEY_NAME: registration_date_2}}
 
+two_users = {**only_user_1, **only_user_2}
+
+only_user_1_updated = {mock_user_1: {TOKEN_KEY_NAME: mock_token_1_updated,
+                                     REGISTRATION_DATE_KEY_NAME: registration_date_1_updated}}
 
 
 class TestAuth(unittest.TestCase):
@@ -62,19 +67,21 @@ class TestAuth(unittest.TestCase):
     def test_add_user_to_cache_force_update(self):
 
         with mock.patch('builtins.open', mock.mock_open()) as mock_open:
+            mock_open.return_value.read.return_value = json.dumps({})
 
             with mock.patch('requests.post') as mock_post:
 
-                mock_post.return_value.json.return_value = json.dumps({'access_token': mock_token_1})
-
+                mock_post.return_value.json.return_value = {'access_token': mock_token_1}
+                # Add the user to the cache
                 auth.add_user_to_cache(mock_user_1, mock_password_1)
-                mock_open().write.assert_called_once_with(json.dumps(only_user_1))
+                mock_open().read.return_value = json.dumps(only_user_1)
 
-                mock_open().write.reset_mock()
-                mock_post().reset_mock()
-
+                mock_post.return_value.json.return_value = {'access_token': only_user_1_updated[mock_user_1][TOKEN_KEY_NAME]}
+                mock_open().write.return_value = json.dumps(only_user_1_updated)
                 auth.add_user_to_cache(mock_user_1, mock_password_1, force_update=True)
-                mock_open().write.assert_called_once_with(json.dumps(only_user_1))
+                mock_open().read.return_value = json.dumps(only_user_1_updated)
+
+                assert auth.load_token_for_user(mock_user_1) == only_user_1_updated[mock_user_1][TOKEN_KEY_NAME]
 
     def test_remove_user_from_cache(self):
         with mock.patch('builtins.open', mock.mock_open()) as mock_open:

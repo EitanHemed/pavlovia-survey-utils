@@ -15,7 +15,7 @@ def process_image(image_str: str, pth: str | pathlib.Path) -> None:
     :param pth: The path to save the image to.
     :return: None
     """
-    image_format, image_data = read_base64_img(image_str)
+    image_format, image_data = read_base64_image_str(image_str)
     save_base64_image(pth, image_format, image_data)
 
 
@@ -30,7 +30,7 @@ def find_image_columns(df: pd.DataFrame) -> typing.List:
         df[str_cols].apply(lambda s: s.str.startswith('data:image')).any(axis='index').values].tolist()
 
 
-def read_base64_img(image_string: str) -> typing.Tuple[str, bytes]:
+def read_base64_image_str(image_string: str) -> typing.Tuple[str, bytes]:
     """
     Read a base64 image string and return the image format and image data.
     :param image_string:
@@ -71,7 +71,8 @@ def save_image_columns(df: pd.DataFrame, survey_name: str, root: str | pathlib.P
 
         for n, g in grouped:
             for i in image_columns:
-                pth = os.path.join(os.path.abspath(root), 'pavlovia-survey-utils', survey_name, 'images', i)
+                pth = os.path.join(os.path.abspath(root),
+                                   'pavlovia-survey-utils', survey_name, 'images', i)
                 os.makedirs(pth, exist_ok=True)
                 process_image(g[i].values[0],
                               os.path.join(pth, n))
