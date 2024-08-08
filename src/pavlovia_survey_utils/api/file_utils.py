@@ -25,7 +25,7 @@ def find_image_columns(df: pd.DataFrame) -> typing.List:
     :param df: The dataframe to search for image columns.
     :return: List of image columns.
     """
-    str_cols = df.columns[(df.applymap(type) == str).all(axis='index')]
+    str_cols = df.columns[(df.map(type) == str).all(axis='index')]
     return str_cols[
         df[str_cols].apply(lambda s: s.str.startswith('data:image')).any(axis='index').values].tolist()
 
