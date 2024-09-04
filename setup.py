@@ -1,4 +1,5 @@
-INSTALL_REQUIRES = [
-   'requests',
-   'pandas',
-]
+# Mainly for editable installations
+import setuptools
+
+if __name__ == "__main__":
+    setuptools.setup()
